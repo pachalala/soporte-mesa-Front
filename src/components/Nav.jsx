@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import { AppBar, Toolbar,Typography ,Button} from '@mui/material';
+import {  GenContext } from  "../context/GenContext"  ;
+import {   useContext } from "react";
 
 function Nav() {
+
+
+  const { Usuario  } = useContext(GenContext);
+
   return (
     <nav>
      
@@ -9,7 +15,7 @@ function Nav() {
         <Toolbar>
         <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/Inicio">Home</Link>
         </li>
         <li>
           <Link to="/ingredientes">Ingredientes</Link>
@@ -19,7 +25,7 @@ function Nav() {
         </li>
       </ul>
 
-     
+          usuario: {Usuario.nombre}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
