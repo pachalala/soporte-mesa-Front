@@ -4,23 +4,13 @@ import { createContext, useState, useEffect } from "react";
 export const GenContext = createContext();
 
 export function GenContextProvider(props) {
-  const [Usuario, setUsuario] = useState({ nombre: "", perfil:""  });
+  const [Usuario, setUsuario] = useState({ nombre: "", perfil:"", ini : 0  });
 
  
      
   
    
-  useEffect(() => {
-    //   setPlatos_db(D_Platos);
-    //   setPlatos_Lista(D_Platos);
-   // llena_ingredientes();
-    
    
- //   console.log( " ini context:: ");
-   // setPlatos_l(D_Platos);
-
-  }, []);
- 
   const valor = {
     Usuario, setUsuario
 

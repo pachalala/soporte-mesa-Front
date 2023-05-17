@@ -70,7 +70,7 @@ console.log("data:" + JSON.stringify(data));
      .then(data => console.log(data))
         .catch(error => console.log(error));*/
 
-        setUsuario({ nombre: data.nombre, perfil:"123"  });
+        setUsuario({ nombre: data.nombre, perfil:"123", ini:1  });
         //const navigateTo = useNavigate ();
        // navigateTo('/Inicio');
        // window.location.href = '/Inicio';

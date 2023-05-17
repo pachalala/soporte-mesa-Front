@@ -3,7 +3,7 @@
 import { BrowserRouter, Routes, Route  } from 'react-router-dom';
 
 import {  GenContext } from  "./context/GenContext"  ;
-import {   useContext } from "react";
+import {   useContext,useEffect } from "react";
 
 import {    useNavigate } from "react-router-dom";
  
@@ -16,8 +16,26 @@ import    Inicio  from './components/Inicio'
 
 function App() {
 
-  const { Usuario  } = useContext(GenContext);
+  const { Usuario, setUsuario  } = useContext(GenContext);
+
+
+  useEffect(() => {
+    
+    console.log("ini:" + Usuario.ini);
  
+    if (Usuario.ini == 1)
+      {
+       
+          setUsuario( prevDatos => ({ ...prevDatos, ini: 1 }));
+          const navegate = useNavigate();
+          navegate('/inicio');
+       }
+   
+  } ,[Usuario.ini]);
+
+
+
+
   if (!Usuario.nombre)
      return (<>
      <Login/>
