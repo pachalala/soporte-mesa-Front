@@ -18,7 +18,7 @@ const Ingredientes = () => {
 
   useEffect(() => {
     const traeDatos = async () => {
-      const response = await fetch(`http://localhost:3000/ingredientes`);
+      const response = await fetch(`http://localhost:5021/ingredientes`);
       const data = await response.json();
       console.log(`data 1:${JSON.stringify(data)}`);
 

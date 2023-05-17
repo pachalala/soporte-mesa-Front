@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import {  GenContext } from  "../context/GenContext"  ;
 import {   useContext } from "react";
 
+import {  useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
@@ -70,8 +71,10 @@ console.log("data:" + JSON.stringify(data));
         .catch(error => console.log(error));*/
 
         setUsuario({ nombre: data.nombre, perfil:"123"  });
+        //const navigateTo = useNavigate ();
+       // navigateTo('/Inicio');
+       // window.location.href = '/Inicio';
 
-        history.push('/inicio');
       } else {
         console.log('Los campos no son válidos');
       }

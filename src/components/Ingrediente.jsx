@@ -17,7 +17,7 @@ const Ingrediente = () => {
 
   useEffect(() => {
     const obtenerNombre = async () => {
-      const response = await fetch(`http://localhost:3000/ingredientes/${id}`);
+      const response = await fetch(`http://localhost:5021/ingredientes/${id}`);
       const data = await response.json();
       console.log(`data 1:${JSON.stringify(data)}`);
    
@@ -49,8 +49,8 @@ const Ingrediente = () => {
 console.log("data:" + JSON.stringify(data));
 
       if (validacampos()  ) {
-        fetch('http://localhost:3000/ingredientes', {
-          method: 'POST',
+        fetch('http://localhost:5021/ingredientes', {
+          method: 'PUT',
           body: JSON.stringify( {id: data.id,  nombre: data.nombre}
            ),
           headers: {
