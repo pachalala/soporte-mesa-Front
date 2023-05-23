@@ -51,7 +51,7 @@ function Nav() {
             News
           </Typography>
           <Link to="#" onClick={handleClick}>Salir</Link>
-          <Link to="/ingredientes"><Button color="inherit">Login</Button></Link> 
+          <Link to="/ingredientes">Ingrediente</Link> <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
 

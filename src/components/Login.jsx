@@ -27,7 +27,7 @@ const Login = () => {
    const [esTextoValido, setEsTextoValido] = useState(true);
   
    const { id } = useParams();
-   
+   const navigateTo = useNavigate ();
  
 
   useEffect(() => {
@@ -78,11 +78,12 @@ console.log("data:" + JSON.stringify(data));
         .catch(error => console.log(error));*/
 
  ///   //    setUsuario({ nombre: data.nombre, perfil:"123", ini:1  });
-        //const navigateTo = useNavigate ();
-       // navigateTo('/Inicio');
+  
+        //navigateTo('/Inicio');
        // window.location.href = '/Inicio';
        setalert(true);
        setUsuario({ nombre: data.nombre, perfil:"123", ini:1  });
+       navigateTo('/Inicio');
       } else {
         console.log('Los campos no son válidos');
       }

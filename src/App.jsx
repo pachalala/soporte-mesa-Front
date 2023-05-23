@@ -54,7 +54,7 @@ function App() {
   if (!Usuario.nombre)
      return (<>
         <div style={{ width:"400px"}}>  
-     <Login2/>
+     <Login/>
      </div>
      </>)  
   else 
@@ -63,7 +63,7 @@ function App() {
   return (
     <>
     <BrowserRouter>
-    <Nav2/>
+  
    <div style={{ width:"400px"}}>  
     <Routes>
         

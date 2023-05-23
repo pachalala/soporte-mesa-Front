@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 import {   useNavigate } from "react-router-dom";
 
 import {    Dialog, DialogTitle,DialogContent,DialogContentText,DialogActions} from '@mui/material';
+import Nav2 from './Nav2'
+
 
 const Ingrediente = () => {
    const [data, setData] = useState([]);
@@ -79,7 +81,7 @@ console.log("data:" + JSON.stringify(data));
     <div>
 
  <form onSubmit={handleSubmit}>
-       
+ <Nav2/>
         <h2>Ingrediente - </h2>
 
         <div>

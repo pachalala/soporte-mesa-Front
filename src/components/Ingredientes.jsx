@@ -8,6 +8,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import {  grey } from "@mui/material/colors";
+import Nav2 from './Nav2'
+
 
 const Ingredientes = () => {
   const [data, setData] = useState([]);
@@ -66,6 +68,7 @@ const Ingredientes = () => {
   if (data.length !=0){
   return (
     <>
+    <Nav2/>
       <h2>Ingredientes listar</h2>
 
       <div style={{ width: 500 }}>
