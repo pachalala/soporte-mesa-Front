@@ -1,18 +1,31 @@
 import { Link } from "react-router-dom";
-import { AppBar, Toolbar,Typography ,Button} from '@mui/material';
+import { AppBar, Toolbar,Typography ,Button, Dialog, DialogTitle,DialogContent,DialogContentText,DialogActions} from '@mui/material';
 import {  GenContext } from  "../context/GenContext"  ;
 import {   useContext } from "react";
- 
+import { useState  } from 'react';
  
 
 function Nav() {
 
   const {  Usuario, setUsuario   } = useContext(GenContext);
+  const [open, setOpen] =  useState(false);
+
+  const handleYes = () => {
+    setUsuario({ nombre: "", perfil:""  });
+  
+    console.log("cerrando popup");
+  };
+
+
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
 
   function handleClick() {
-    setUsuario({ nombre: "", perfil:""  });
-    console.log('Se hizo clic en el enlace');
+    setOpen(true);
+     
   }
 
 
@@ -38,9 +51,37 @@ function Nav() {
             News
           </Typography>
           <Link to="#" onClick={handleClick}>Salir</Link>
-          <Link to="/">Ingrediente</Link> <Button color="inherit">Login</Button>
+          <Link to="/ingredientes"><Button color="inherit">Login</Button></Link> 
         </Toolbar>
       </AppBar>
+
+
+
+
+
+      <Dialog
+        open={open}
+        onClose={handleCancel}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Salir"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            ¿Estás seguro de querer salir?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button  onClick={handleCancel}   >Cancelar</Button>
+          <Button onClick={handleYes} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
 
     </nav>
   );

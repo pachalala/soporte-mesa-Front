@@ -9,20 +9,35 @@ import {    useNavigate } from "react-router-dom";
  
 
 import Nav from './components/Nav'
+import Nav2 from './components/Nav2'
+
 import    Ingredientes  from './components/Ingredientes'
 import    Ingrediente  from './components/Ingrediente'
 import    Login  from './components/Login'
+import    Login2  from './components/Login2'
+
 import    Inicio  from './components/Inicio'
+import { useLocation } from 'react-router-dom';
+import { ConstructionOutlined } from '@mui/icons-material';
+
+
 
 function App() {
 
   const { Usuario, setUsuario  } = useContext(GenContext);
 
+ // const location = useLocation();
 
   useEffect(() => {
     
     console.log("ini:" + Usuario.ini);
- 
+
+
+  //  const rutaActual = location.pathname;
+  
+   // console.log("ruta" + rutaActual)
+
+ /*
     if (Usuario.ini == 1)
       {
        
@@ -30,7 +45,7 @@ function App() {
           const navegate = useNavigate();
           navegate('/inicio');
        }
-   
+   */
   } ,[Usuario.ini]);
 
 
@@ -38,7 +53,9 @@ function App() {
 
   if (!Usuario.nombre)
      return (<>
-     <Login/>
+        <div style={{ width:"400px"}}>  
+     <Login2/>
+     </div>
      </>)  
   else 
 {
@@ -46,10 +63,12 @@ function App() {
   return (
     <>
     <BrowserRouter>
-    <Nav/>
+    <Nav2/>
+   <div style={{ width:"400px"}}>  
     <Routes>
-       <Route  path="/login" element={<Login/>}>Login</Route>  
-      
+        
+       <Route  path="/Login" element={<Login/>}>Login</Route>  
+       
        <Route  path="/ingredientes" element={<Ingredientes/>}>Ingredientes</Route>  
        <Route  path="/platos" element={<Ingredientes/>}>Platos</Route>  
        <Route  path="/inicio" element={<Inicio/>}>Home</Route>  
@@ -57,11 +76,10 @@ function App() {
        <Route  path="/ingrediente/:id" element={<Ingrediente/>}>Ingrediente</Route>  
      
        </Routes>
-
-
-
-    
+       </div>
+       
     </BrowserRouter>
+  
    </> 
   )
 }

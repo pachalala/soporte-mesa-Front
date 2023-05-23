@@ -1,4 +1,4 @@
-import {  Button }from "@mui/material";
+import {  Button,Alert }from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 
 import {  GenContext } from  "../context/GenContext"  ;
 import {   useContext } from "react";
+import CssBaseline from '@mui/material/CssBaseline';
+
 
 import {  useNavigate } from 'react-router-dom';
 
@@ -14,6 +16,11 @@ const Login = () => {
 
     const {  Usuario, setUsuario   } = useContext(GenContext);
 
+
+    const [  alert, setalert  ] = useState(false);
+
+
+    
 
    const [data, setData] = useState([]);
 
@@ -70,11 +77,12 @@ console.log("data:" + JSON.stringify(data));
      .then(data => console.log(data))
         .catch(error => console.log(error));*/
 
-        setUsuario({ nombre: data.nombre, perfil:"123", ini:1  });
+ ///   //    setUsuario({ nombre: data.nombre, perfil:"123", ini:1  });
         //const navigateTo = useNavigate ();
        // navigateTo('/Inicio');
        // window.location.href = '/Inicio';
-
+       setalert(true);
+       setUsuario({ nombre: data.nombre, perfil:"123", ini:1  });
       } else {
         console.log('Los campos no son válidos');
       }
@@ -83,7 +91,7 @@ console.log("data:" + JSON.stringify(data));
 
   return (
     <div>
-
+   <CssBaseline />
  <form onSubmit={handleSubmit}>
        
         <h2>Login</h2>
@@ -96,7 +104,7 @@ console.log("data:" + JSON.stringify(data));
             defaultValue= " "
             variant="outlined"
             sx={{mb: 3}}
-          />
+          /> 
         </div>
         <div>
           <TextField
@@ -113,7 +121,9 @@ console.log("data:" + JSON.stringify(data));
           />
         </div>
          
-
+        <div >
+          {alert ? <Alert     sx={{mb: 3}} severity='error'>Usuario o clave inválidos</Alert> : <></> }
+          </div>
         <Button  type="submit" variant="contained" color="primary">Guardar</Button>
       
         <Button   variant="contained" color="secondary"   onClick={()=> navegate(-1)}>Volver</Button>

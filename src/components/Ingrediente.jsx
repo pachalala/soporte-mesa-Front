@@ -5,13 +5,15 @@ import { useState, useEffect } from 'react';
 
 import {   useNavigate } from "react-router-dom";
 
+import {    Dialog, DialogTitle,DialogContent,DialogContentText,DialogActions} from '@mui/material';
+
 const Ingrediente = () => {
    const [data, setData] = useState([]);
 
    const [esTextoValido, setEsTextoValido] = useState(true);
   
    const { id } = useParams();
-   
+   const [open, setOpen] =  useState(false);
 
    const navegate = useNavigate();
 
@@ -36,7 +38,11 @@ const Ingrediente = () => {
 
    }
 
- 
+   const handleCancel = () => {
+    navegate(-1);
+    //setOpen(false);
+  };
+
 
   const handleNombreChange = (event) => {
     setData({...data, nombre: event.target.value});
@@ -60,6 +66,9 @@ console.log("data:" + JSON.stringify(data));
         .then(response => response.text)
      .then(data => console.log(data))
         .catch(error => console.log(error));
+
+        setOpen(true); // levanta popup
+
       } else {
         console.log('Los campos no son válidos');
       }
@@ -105,7 +114,39 @@ console.log("data:" + JSON.stringify(data));
 
         </form>
  
+
+
+
+        <Dialog
+open={open}
+onClose={handleCancel}
+aria-labelledby="alert-dialog-title"
+aria-describedby="alert-dialog-description"
+>
+<DialogTitle id="alert-dialog-title">
+  {"Guardar Datos"}
+</DialogTitle>
+<DialogContent>
+  <DialogContentText id="alert-dialog-description">
+    Ingrediente guardado con éxito
+  </DialogContentText>
+</DialogContent>
+<DialogActions>
+ 
+  <Button onClick={handleCancel} autoFocus>
+    OK
+  </Button>
+</DialogActions>
+</Dialog>
+
+
     </div>
+
+
+
+
+
+
   );
 };
 
