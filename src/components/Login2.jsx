@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import {Button,Alert } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -12,21 +12,100 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
- 
+import { useState, useEffect , useContext} from 'react';
+
+import {  GenContext } from  "../context/GenContext"  ;
+
+
+import {  useNavigate } from 'react-router-dom';
+
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
+
 export default function Login2() {
-  const handleSubmit = (event) => {
+
+  const {  Usuario, setUsuario   } = useContext(GenContext);
+
+  const [esnombreValido, setesnombreValido] = useState(true);
+
+  const [esclaveValido, setesclaveValido] = useState(true);
+
+  const [  alert, setalert  ] = useState(false);
+
+
+
+  const navigateTo = useNavigate ();
+
+
+  const handleSubmit2 = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      usuario: data.get('usuario'),
+      clave: data.get('clave'),
     });
   };
+
+
+  const  validacampos  = (event) =>{
+
+    const data = new FormData(event.currentTarget);
+    const nombrEval = data.get('usuario').trim() !== ''
+    const claveEval = data.get('clave').trim() !== ''
+   
+    setesnombreValido(nombrEval);
+    setesclaveValido(claveEval);
+
+    return nombrEval && claveEval ;
+
+  }
+
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+  // console.log("data:" + JSON.stringify(data));
+
+    if (validacampos(event)  ) { /*
+      fetch('http://localhost:3000/ingredientes', {
+        method: 'POST',
+        body: JSON.stringify( {id: data.id,  nombre: data.nombre}
+         ),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+      .then(response => response.text)
+   .then(data => console.log(data))
+      .catch(error => console.log(error));*/
+
+      const data = new FormData(event.currentTarget);
+      const nombrEval = data.get('usuario').trim() !== ''
+      const claveEval = data.get('clave').trim() !== ''
+     
+      
+
+    setUsuario({ nombre: data.get('usuario'), perfil:"123", ini:1  });
+
+      navigateTo('/Inicio');
+     // window.location.href = '/Inicio';
+    
+    
+     //setalert(true);
+
+
+   //  setUsuario({ nombre: data.nombre, perfil:"123", ini:1  });
+   //  navigateTo('/Inicio');
+    
+  } else {
+      console.log('Los campos no son válidos');
+    }
+  };
+
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -51,26 +130,39 @@ export default function Login2() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="usuario"
+              label="Nombre Usuario"
+              name="usuario"
+              autoComplete="usuario"
               autoFocus
+
+              error={!esnombreValido}
+              helperText={!esnombreValido && 'El campo no puede estar vacío'}
+       
+
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
+              name="clave"
+              label="Clave"
               type="password"
-              id="password"
+              id="clave"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+           
+           
+              error={!esclaveValido}
+              helperText={!esclaveValido && 'El campo no puede estar vacío'}
+       
+           
+           />
+
+
+<div >
+          {alert ? <Alert     sx={{mb: 3}} severity='error'>Usuario o clave inválidos</Alert> : <></> }
+          </div>
+            
             <Button
               type="submit"
               fullWidth
@@ -79,18 +171,7 @@ export default function Login2() {
             >
               Ingresar
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+          
           </Box>
         </Box>
          

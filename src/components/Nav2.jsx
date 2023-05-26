@@ -12,8 +12,14 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link } from "react-router-dom";
  
+
+import { Link } from "react-router-dom";
+import {  GenContext } from  "../context/GenContext"  ;
+import {   useContext } from "react";
+import {  Dialog, DialogTitle,DialogContent,DialogContentText,DialogActions} from '@mui/material';
+
+
 const pages = [
 {
   name:  'Inicio',
@@ -21,9 +27,16 @@ const pages = [
 }
   , 
   {
-    name:  'Ingredientes',
-    link :  '/ingredientes'
+    name:  'Usuarios-Crear',
+    link :  '/usuarios/crear'
   }
+  , 
+  {
+    name:  'Usuarios-Buscar',
+    link :  '/usuarios/buscar'
+  }
+  
+  
 
 
 ];
@@ -43,6 +56,30 @@ const settings = [
 function Nav2() {
   const [anchorElNav, setAnchorElNav] =   useState(null);
   const [anchorElUser, setAnchorElUser] =  useState(null);
+  const [openD, setOpenD] =  useState(false);
+  const {  Usuario, setUsuario   } = useContext(GenContext);
+
+  const handleYes = () => {
+    setUsuario({ nombre: "", perfil:""  });
+  
+    console.log("cerrando popup");
+  };
+
+
+
+  const handleCancel = () => {
+    setOpenD(false);
+  };
+
+
+  function handleClick() {
+    setOpenD(true);
+     
+  }
+
+
+
+
 
   const handleOpenNavMenu = (event ) => {
     setAnchorElNav(event.currentTarget);
@@ -67,6 +104,9 @@ function Nav2() {
   };
 
   return (
+
+<>
+
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -194,6 +234,32 @@ function Nav2() {
         </Toolbar>
       </Container>
     </AppBar>
+
+
+
+
+<Dialog
+open={openD}
+onClose={handleCancel}
+aria-labelledby="alert-dialog-title"
+aria-describedby="alert-dialog-description"
+>
+<DialogTitle id="alert-dialog-title">
+  {"Salir"}
+</DialogTitle>
+<DialogContent>
+  <DialogContentText id="alert-dialog-description">
+    ¿Estás seguro de querer salir?
+  </DialogContentText>
+</DialogContent>
+<DialogActions>
+  <Button  onClick={handleCancel}   >Cancelar</Button>
+  <Button onClick={handleYes} autoFocus>
+    OK
+  </Button>
+</DialogActions>
+</Dialog>
+</>
   );
 }
 export default Nav2;
