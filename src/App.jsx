@@ -85,7 +85,7 @@ function App() {
      </>)  
      }
   else 
-{
+{ 
   console.log("con usuario..");
   return (
     <>
@@ -93,11 +93,9 @@ function App() {
     <CssBaseline />
 
     <Box     sx={{  
-    
-    
-    backgroundColor: '#f5f5f5'  // Establece un fondo gris claro
-  
-
+     
+     backgroundColor: '#f5f5f5'  // Establece un fondo gris claro
+   
     }}  > 
      
     <Routes>

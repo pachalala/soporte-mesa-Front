@@ -7,14 +7,19 @@ import {
   Grid,
   Link,
   IconButton,
-  
+  Container,
   Box,
-  TextField,Button
+  TextField,Button,Typography  
 } from "@mui/material";
+import  Texto    from "../library/Texto";
+import   Titulo   from "../library/Titulo";
 
-
+ 
 import EditIcon from "@mui/icons-material/Edit";
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const defaultTheme = createTheme(); 
 const Buscar = () => {
   const [usuarios, setusuarios] = useState([]);
 
@@ -96,29 +101,47 @@ const Buscar = () => {
             <MatEdit index={params.row.login} />
           </div>
         );
-      },
+      },  
     },
-    { field: "rut", headerName: "Rut", width: 30 },
-    { field: "nombre", headerName: "Nombre", width: 140 },
-    { field: "region", headerName: "Region", width: 140 },
+    { field: "rut", headerName: "Rut", width: 30,  headerClassName: 'super-app-theme--header', },
+    { field: "nombre", headerName: "Nombre", width: 140,  headerClassName: 'super-app-theme--header', },
+    { field: "region", headerName: "Region", width: 140,  headerClassName: 'super-app-theme--header', },
   ];
 
   return (
     <>
       <Nav2 />
-      
-
+      <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+     
+     
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 ,
     
     border: '1px solid #ccc', // Agrega un borde de 1px sólido con color gris claro
     backgroundColor: '#ffffff', 
       // Establece un fondo gris claro
     padding: '10px', 
-    borderRadius: '8px',
-    width: '550px'
-
+    borderRadius: '5px',
+    width: '550px',
+    '& .super-app-theme--header': {
+      fontWeight: 'bold',
+     //backgroundColor: 'rgba(255, 7, 0, 0.55)',
+    },
     }}> 
-<h2>Buscar</h2>  <TextField
+  <Titulo titulo="Buscar Usuario"/>
+            
+
+  <Box 
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            
+          }}
+        >
+
+         <TextField
               margin="normal"
              
               fullWidth
@@ -127,24 +150,43 @@ const Buscar = () => {
               name="usuario"
               autoComplete="usuario"
               autoFocus
+              variant="filled"
+       
+              sx={{
+              //  backgroundColor: '#e9eff7' 
+                            }}
+
+            />
+            <Texto 
+             id= "nombrex"
+             name = "nombrex"
+             label = "Nombre Usuario XX"
+             
             />
              <TextField
               margin="normal"
-               
               fullWidth
+               
               id="nombre"
               label="Nombre Usuario"
               name="nombre"
               autoComplete="nombre"
+ 
+              variant="filled"
+              placeholder="Ej: pepito los palotes"
+       
+
             />
              <TextField
               margin="normal"
-              
+              variant="filled"
+       
               fullWidth
               id="rut"
               label="RUT"
               name="rut"
               autoComplete="rut"
+              placeholder="Ej: 11340632-1"
             />
       
         <Button
@@ -156,9 +198,14 @@ const Buscar = () => {
           Buscar
         </Button>
 
+
+        </Box>
+
         {buscar ? (
           <div style={{ width: 500 }}>
             <DataGrid
+  
+
               rows={usuarios}
               columns={columns}
               initialState={{
@@ -173,6 +220,8 @@ const Buscar = () => {
           <></>
         )}
       </Box>
+      </Container>
+      </ThemeProvider>
     </>
   );  
 };

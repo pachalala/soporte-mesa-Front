@@ -40,6 +40,19 @@ export default function Login2() {
   const navigateTo = useNavigate ();
 
 
+
+  useEffect(() => {
+    //   setPlatos_db(D_Platos);
+    //   setPlatos_Lista(D_Platos);
+    // llena_ingredientes();
+    setUsuario({});
+
+    console.log(" ini context:: ");
+    // setPlatos_l(D_Platos);
+  }, []);
+
+
+
   const handleSubmit2 = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
