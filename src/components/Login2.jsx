@@ -27,7 +27,7 @@ const defaultTheme = createTheme();
 
 export default function Login2() {
 
-  const {  Usuario, setUsuario   } = useContext(GenContext);
+  const {  Login, setLogin   } = useContext(GenContext);
 
   const [esnombreValido, setesnombreValido] = useState(true);
 
@@ -37,7 +37,7 @@ export default function Login2() {
 
 
 
-  const navigateTo = useNavigate ();
+ // const navigateTo = useNavigate ();
 
 
 
@@ -45,7 +45,7 @@ export default function Login2() {
     //   setPlatos_db(D_Platos);
     //   setPlatos_Lista(D_Platos);
     // llena_ingredientes();
-    setUsuario({});
+    setLogin({});
 
     console.log(" ini context:: ");
     // setPlatos_l(D_Platos);
@@ -101,9 +101,9 @@ export default function Login2() {
      
       
 
-    setUsuario({ nombre: data.get('usuario'), perfil:"123", ini:1  });
+    setLogin({ nombre: data.get('usuario'), perfil:"123", ini:1  });
 
-      navigateTo('/Inicio');
+    //  navigateTo('/Inicio');
      // window.location.href = '/Inicio';
     
     
@@ -122,14 +122,27 @@ export default function Login2() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
+      <div align="center">
+       <CssBaseline />
+      <Container component="main" 
+      sx={{
+        alignSelf: 'center',
+       
+        alignItems: 'center',
+        justifyContent: 'center'
+        
+      }}
+      
+      >
+          <Box
           sx={{
+            alignSelf: 'center',
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center'
+            
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -189,6 +202,7 @@ export default function Login2() {
         </Box>
          
       </Container>
+      </div>
     </ThemeProvider>
   );
 }

@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import Nav2 from "../Nav2";
-import { usuarios as d_usuarios } from "../../data/usuarios";
+import { usuarios as d_usuarios, regiones , perfiles} from "../../data/usuarios";
 import { useParams, useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import {
@@ -14,32 +14,56 @@ import {
 import  Texto    from "../library/Texto";
 import   Titulo   from "../library/Titulo";
 
- 
-import EditIcon from "@mui/icons-material/Edit";
+import   {Regiones}   from "../library/Regiones";
+
+  
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme(); 
-const Buscar = () => {
-  const [usuarios, setusuarios] = useState([]);
+const Editar = () => {
 
-  const [buscar, setbuscar] = useState(false);
-
-  const navegate = useNavigate();
-
+  const [Usuario, setUsuario] = useState({
+    id:  0,
+    login : '',
+    nombre : '',
+    rut : '-',
+    clave : '',
+    perfil : 0,
+    region : 0,
+    activo: 0,
+  }); 
+  
+  const { id } = useParams();
+ 
   useEffect(() => {
-    //   setPlatos_db(D_Platos);
-    //   setPlatos_Lista(D_Platos);
-    // llena_ingredientes();
-    setusuarios(d_usuarios);
 
-    console.log(" ini context:: ");
-    // setPlatos_l(D_Platos);
+      setUsuario(  trae_registro (id)); 
+      console.log(`data 1:${JSON.stringify(Usuario)}`);
   }, []);
+
+
+
+  const trae_registro = async (userId) => {
+   
+    /*
+    const response = await fetch(`http://localhost:5021/ingredientes/${id}`);
+    const data = await response.json();
+    console.log(`data 1:${JSON.stringify(data)}`);
+ */
+    console.log(`id 1:${userId}`);
+      return d_usuarios.find(user => user.id === userId);
+
+    };
+    
+ 
+ 
+
 
   function validacampos(event) {
     return true;
   }
+ 
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -62,52 +86,13 @@ const Buscar = () => {
       const nombrEval = data.get('usuario').trim() !== ''
       const claveEval = data.get('clave').trim() !== ''
   */
-
-      setbuscar(true);
+ 
     } else {
       console.log("Los campos no son válidos");
     }
   };
 
-  const MatEdit = ({ index }) => {
-    const handleEditClick = () => {
-      navegate("/usuarios/editar/" + index);
-    };
-
-    return (
-      <IconButton
-        color="secondary"
-        aria-label="add an alarm"
-        onClick={handleEditClick}
-      >
-        <EditIcon />
-      </IconButton>
-    );
-  };
-
-  const columns = [
-    {
-      field: "actions",
-      headerName: "",
-      sortable: false,
-      width: 80,
-      disableClickEventBubbling: true,
-      renderCell: (params) => {
-        return (
-          <div
-            className="d-flex justify-content-between align-items-center"
-            style={{ cursor: "pointer" }}
-          >
-            <MatEdit index={params.row.login} />
-          </div>
-        );
-      },  
-    },
-    { field: "rut", headerName: "Rut", width: 30,  headerClassName: 'super-app-theme--header', },
-    { field: "nombre", headerName: "Nombre", width: 140,  headerClassName: 'super-app-theme--header', },
-    { field: "region", headerName: "Region", width: 140,  headerClassName: 'super-app-theme--header', },
-  ];
-
+ 
   return (
     <>
  <ThemeProvider theme={defaultTheme}>
@@ -131,7 +116,7 @@ const Buscar = () => {
      //backgroundColor: 'rgba(255, 7, 0, 0.55)',
     },
     }}> 
-  <Titulo titulo="Buscar Usuario"/>
+  <Titulo titulo="Editar Usuario"/>
             
 
   <Box 
@@ -154,18 +139,13 @@ const Buscar = () => {
               autoComplete="usuario"
               autoFocus
               variant="filled"
-       
+              value={Usuario.login}
               sx={{
               //  backgroundColor: '#e9eff7' 
                             }}
 
             />
-            <Texto 
-             id= "nombrex"
-             name = "nombrex"
-             label = "Nombre Usuario XX"
-             
-            />
+            <Regiones      />
              <TextField
               margin="normal"
               fullWidth
@@ -198,30 +178,22 @@ const Buscar = () => {
           variant="contained"
           sx={{ mt: 3, mb: 4 }}
         >
-          Buscar
+          Guardar
         </Button>
-
+        <Button
+           
+           type="submit"
+           color="primary"
+         variant="outlined"
+          sx={{ mt: 3, mb: 4 }}
+          
+        >
+          Volver
+        </Button>
 
         </Box>
 
-        {buscar ? (
-          <div style={{ width: 500 }}>
-            <DataGrid
-  
-
-              rows={usuarios}
-              columns={columns}
-              initialState={{
-                pageSize: 5,
-                pagination: {
-                  paginationModel: { pageSize: 25, page: 0 },
-                },
-              }}
-            />
-          </div>
-        ) : (
-          <></>
-        )}
+       
       </Box>
       </Container>
       </ThemeProvider>
@@ -229,5 +201,5 @@ const Buscar = () => {
   );  
 };
 
-export default Buscar;
+export default Editar;
  

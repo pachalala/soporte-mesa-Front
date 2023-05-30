@@ -4,7 +4,7 @@ const Titulo  = ({
     titulo
   }) => {
     return (
-        <Typography component="h1" variant="h5">
+        <Typography component="h2" variant="h5">
        {titulo}
 </Typography>
     );

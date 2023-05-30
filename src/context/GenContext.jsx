@@ -4,7 +4,7 @@ import { createContext, useState, useEffect } from "react";
 export const GenContext = createContext();
 
 export function GenContextProvider(props) {
-  const [Usuario, setUsuario] = useState({ nombre: "", perfil:"", ini : 0  });
+  const [Login, setLogin] = useState({ nombre: "", perfil:"", ini : 0  });
 
  
      
@@ -12,7 +12,7 @@ export function GenContextProvider(props) {
    
    
   const valor = {
-    Usuario, setUsuario
+    Login, setLogin
 
   };
 
