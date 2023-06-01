@@ -2,7 +2,7 @@ export const usuarios =
  
 [
   {
-    id:  '123',
+    id:  123,
     login : '123',
     nombre : 'Perico los palotes',
     rut : '1222-3',
@@ -12,7 +12,7 @@ export const usuarios =
     activo: 1,
   } ,
   {
-    id:  '124',
+    id:  124,
     login : '124',
     nombre : 'Perico los palotes 2',
     rut : '2221-3',
@@ -22,7 +22,7 @@ export const usuarios =
     activo: 1,
   } ,
   {
-    id:  '125',
+    id:  125,
     login : '125',
     nombre : 'Perico los palotes 3',
     rut : '1234-2',
@@ -33,7 +33,7 @@ export const usuarios =
   }
   ,
   {
-    id:  '126',
+    id:  126,
     login : '126',
     nombre : 'Perico los palotes 4',
     rut : '111-2',
