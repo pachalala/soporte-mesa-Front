@@ -6,7 +6,7 @@ import Select    from '@mui/material/Select';
 
 import { usuarios as d_usuarios, perfiles  } from "../../data/usuarios";
 
-export const Perfiles = ()=>{
+export const Perfiles = (props)=>{
 
 
 return (
@@ -14,9 +14,12 @@ return (
         <InputLabel id="lbl_perfil">Perfil</InputLabel>
         <Select
           labelId="lbl_region"
-          id="id_perfil"
+          id="perfil"
         // value={age}
           label="Age"
+
+          {...props}
+            name="perfil"
           //onChange={handleChange}
         >
 

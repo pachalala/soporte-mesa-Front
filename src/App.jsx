@@ -7,15 +7,14 @@ import { useNavigate } from "react-router-dom";
 
 import Nav from "./components/Nav";
 import Nav2 from "./components/Nav2";
-
-import Ingredientes from "./components/Ingredientes";
-import Ingrediente from "./components/Ingrediente";
+  
 import Login from "./components/Login";
 import Login2 from "./components/Login2";
 
 import Buscar from "./components/usuarios/buscar";
 
 import Editar from "./components/usuarios/editar";
+import Editar_Formik from "./components/usuarios/editar";
 
 import Inicio from "./components/Inicio";
 import { useLocation } from "react-router-dom";
@@ -74,8 +73,8 @@ function App() {
               <Route path="/usuarios/buscar" element={<Buscar />}>
                 Ingredientes
               </Route>
-              <Route path="/usuarios/editar/:id" element={<Editar />}>
-                Platos
+              <Route path="/usuarios/editar/:id" element={<Editar_Formik />}>
+                Editar
               </Route>
               <Route path="/inicio" element={<Inicio />}>
                 Home
@@ -83,9 +82,7 @@ function App() {
               <Route path="/" element={<Inicio />}>
                 Inicio
               </Route>
-              <Route path="/ingrediente/:id" element={<Ingrediente />}>
-                Ingrediente
-              </Route>
+             
             </Routes>
           </Container   >
         </BrowserRouter>

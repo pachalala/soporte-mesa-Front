@@ -11,7 +11,9 @@ export const Regiones = (props) => {
     <FormControl fullWidth variant="filled" sx={{ mt: 3 }}>
       <TextField
         variant="filled"
-        id="lbl_region"
+        id="region"
+        name="region"
+        
         select
         
         {...props}

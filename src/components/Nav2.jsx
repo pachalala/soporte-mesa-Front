@@ -17,7 +17,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from "react-router-dom";
 import {  GenContext } from  "../context/GenContext"  ;
 import {   useContext } from "react";
-import {  Dialog, DialogTitle,DialogContent,DialogContentText,DialogActions} from '@mui/material';
+import {  Dialog, DialogTitle,DialogContent,DialogContentText,DialogActions, Paper} from '@mui/material';
 
 
 const pages = [
@@ -25,7 +25,7 @@ const pages = [
   name:  'Inicio',
   link :  '/inicio'
 }
-  , 
+ /* , 
   {
     name:  'Usuarios-Crear',
     link :  '/usuarios/crear'
@@ -36,7 +36,7 @@ const pages = [
     link :  '/usuarios/buscar'
   }
   
-  
+  */
 
 
 ];
@@ -58,7 +58,7 @@ function Nav2() {
   const [anchorElUser, setAnchorElUser] =  useState(null);
   const [openD, setOpenD] =  useState(false);
   const {  Usuario, setUsuario   } = useContext(GenContext);
-
+  const [open, setOpen] = useState(true);
   const handleYes = () => {
     setUsuario({ nombre: "", perfil:""  });
   
@@ -78,7 +78,7 @@ function Nav2() {
   }
 
 
-
+ 
 
 
   const handleOpenNavMenu = (event ) => {
@@ -103,11 +103,25 @@ function Nav2() {
     cursor: 'pointer'  // Muestra el cursor como puntero
   };
 
+ 
+ 
+  const [anchorEl, setAnchorEl] =  useState (null);
+  const open_n = Boolean(anchorEl);
+  const handleClick_n = (event ) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
+ 
+ 
   return (
 
 <>
 
-    <AppBar position="static">
+    <AppBar position="static"  elevation={0}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -128,7 +142,7 @@ function Nav2() {
           >
             MESA AYUDA
           </Typography>
-
+  
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -197,6 +211,47 @@ function Nav2() {
               </Button>
               </Link>
             ))}
+
+
+      <Button
+
+  
+  sx={{ my: 2, color: 'white', display: 'block' }}
+ 
+
+        id="basic-button"
+        aria-controls={open_n ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open_n ? 'true' : undefined}
+        onClick={handleClick_n}
+      >
+        Usuarios
+      </Button>
+     
+  
+      <Menu
+        sx={{ width: 320, maxWidth: '100%' }} 
+       id="basic-menu"
+        anchorEl={anchorEl}
+        open={open_n}
+        onClose={handleClose}
+
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleCloseUserMenu}   >
+           <Link to='usuarios/crear'  key='crear'  style={linkStyle}  >   Crear    </Link>
+         </MenuItem>
+        <MenuItem onClick={handleCloseUserMenu}>
+        <Link to='/usuarios/buscar'  key='crear'  style={linkStyle}  >   Buscar    
+           
+          </Link>
+        </MenuItem>
+       </Menu>
+
+ 
+
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

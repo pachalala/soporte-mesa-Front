@@ -63,7 +63,7 @@ export default function Login2() {
   };
 
 
-  const  validacampos  = (event) =>{
+  const   validacampos  = (event) =>{
 
     const data = new FormData(event.currentTarget);
     const nombrEval = data.get('usuario').trim() !== ''
@@ -103,7 +103,7 @@ export default function Login2() {
 
     setLogin({ nombre: data.get('usuario'), perfil:"123", ini:1  });
 
-    //  navigateTo('/Inicio');
+     //  navigateTo('/Inicio');
      // window.location.href = '/Inicio';
     
     

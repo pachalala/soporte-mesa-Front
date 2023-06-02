@@ -9,19 +9,23 @@ import {
   IconButton,
   Container,
   Box,
-  TextField,Button,Typography  
+  TextField,
+  Button,
+  Typography,
+  Alert,
 } from "@mui/material";
-import  Texto    from "../library/Texto";
-import   Titulo   from "../library/Titulo";
+import Texto from "../library/Texto";
+import Titulo from "../library/Titulo";
 
- 
 import EditIcon from "@mui/icons-material/Edit";
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const defaultTheme = createTheme(); 
+const defaultTheme = createTheme();
 const Buscar = () => {
   const [usuarios, setusuarios] = useState([]);
+
+  const [AlertVacios, setAlertVacios] = useState(false);
 
   const [buscar, setbuscar] = useState(false);
 
@@ -38,7 +42,18 @@ const Buscar = () => {
   }, []);
 
   function validacampos(event) {
-    return true;
+    const data = new FormData(event.currentTarget);
+
+    
+    const usuarioValido = data.get("usuario").trim() !== "";
+    const nombreValido = data.get("nombre").trim() !== "";
+    const rutValido = data.get("rut").trim() !== "";
+
+    console.log (usuarioValido||nombreValido||rutValido)
+
+    setAlertVacios(!(usuarioValido||nombreValido||rutValido));
+
+    return (usuarioValido||nombreValido||rutValido);
   }
 
   const handleSubmit = (event) => {
@@ -101,133 +116,146 @@ const Buscar = () => {
             <MatEdit index={params.row.login} />
           </div>
         );
-      },  
+      },
     },
-    { field: "rut", headerName: "Rut", width: 30,  headerClassName: 'super-app-theme--header', },
-    { field: "nombre", headerName: "Nombre", width: 140,  headerClassName: 'super-app-theme--header', },
-    { field: "region", headerName: "Region", width: 140,  headerClassName: 'super-app-theme--header', },
+    {
+      field: "rut",
+      headerName: "Rut",
+      width: 30,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "nombre",
+      headerName: "Nombre",
+      width: 140,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "region",
+      headerName: "Region",
+      width: 140,
+      headerClassName: "super-app-theme--header",
+    },
   ];
 
   return (
     <>
- <ThemeProvider theme={defaultTheme}>
-<Container    sx={{
-              backgroundColor: "#f7f9fa", // Establece un fondo gris claro
-            }}>
-
-      <Nav2 />
-      
-     
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 ,
-    
-    border: '1px solid #ccc', // Agrega un borde de 1px sólido con color gris claro
-    backgroundColor: '#ffffff', 
-      // Establece un fondo gris claro
-    padding: '10px', 
-    borderRadius: '5px',
-    width: '550px',
-    '& .super-app-theme--header': {
-      fontWeight: 'bold',
-     //backgroundColor: 'rgba(255, 7, 0, 0.55)',
-    },
-    }}> 
-  <Titulo titulo="Buscar Usuario"/>
-            
-
-  <Box 
+      <ThemeProvider theme={defaultTheme}>
+        <Container
           sx={{
-            
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            
+            backgroundColor: "#f7f9fa", // Establece un fondo gris claro
           }}
         >
+          <Nav2 />
 
-         <TextField
-              margin="normal"
-             
-              fullWidth
-              id="usuario"
-              label="Usuario"
-              name="usuario"
-              autoComplete="usuario"
-              autoFocus
-              variant="filled"
-       
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{
+              mt: 1,
+
+              border: "1px solid #ccc", // Agrega un borde de 1px sólido con color gris claro
+              backgroundColor: "#ffffff",
+              // Establece un fondo gris claro
+              padding: "10px",
+              borderRadius: "5px",
+              width: "550px",
+              "& .super-app-theme--header": {
+                fontWeight: "bold",
+                //backgroundColor: 'rgba(255, 7, 0, 0.55)',
+              },
+            }}
+          >
+            <Titulo titulo="Buscar Usuario" />
+
+            <Box
               sx={{
-              //  backgroundColor: '#e9eff7' 
-                            }}
-
-            />
-            <Texto 
-             id= "nombrex"
-             name = "nombrex"
-             label = "Nombre Usuario XX"
-             
-            />
-             <TextField
-              margin="normal"
-              fullWidth
-               
-              id="nombre"
-              label="Nombre Usuario"
-              name="nombre"
-              autoComplete="nombre"
- 
-              variant="filled"
-              placeholder="Ej: pepito los palotes"
-       
-
-            />
-             <TextField
-              margin="normal"
-              variant="filled"
-       
-              fullWidth
-              id="rut"
-              label="RUT"
-              name="rut"
-              autoComplete="rut"
-              placeholder="Ej: 11340632-1"
-            />
-      
-        <Button
-          type="submit"
-           color="primary"
-          variant="contained"
-          sx={{ mt: 3, mb: 4 }}
-        >
-          Buscar
-        </Button>
-
-
-        </Box>
-
-        {buscar ? (
-          <div style={{ width: 500 }}>
-            <DataGrid
-  
-
-              rows={usuarios}
-              columns={columns}
-              initialState={{
-                pageSize: 5,
-                pagination: {
-                  paginationModel: { pageSize: 25, page: 0 },
-                },
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
-            />
-          </div>
-        ) : (
-          <></>
-        )}
-      </Box>
-      </Container>
+            >
+              <TextField
+                margin="normal"
+                InputLabelProps={{ shrink: true }}
+                fullWidth
+                id="usuario"
+                label="Usuario"
+                name="usuario"
+                autoComplete="usuario"
+                autoFocus
+                variant="filled"
+                placeholder="Ej: 11340632"
+                sx={
+                  {
+                    //  backgroundColor: '#e9eff7'
+                  }
+                }
+              />
+
+              <TextField
+                margin="normal"
+                fullWidth
+                id="nombre"
+                label="Nombre Usuario"
+                name="nombre"
+                autoComplete="nombre"
+                InputLabelProps={{ shrink: true }}
+                variant="filled"
+                placeholder="Ej: pepito los palotes"
+              />
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                margin="normal"
+                variant="filled"
+                fullWidth
+                id="rut"
+                label="RUT"
+                name="rut"
+                autoComplete="rut"
+                placeholder="Ej: 11340632-1"
+              />
+ 
+              { AlertVacios ? (
+                <Alert sx={{ mb: 3, width: "100%" }} severity="error">
+                   Debe existir algún campo de búsqueda
+                </Alert>
+              ) : (
+                <></>
+              )}
+
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                sx={{ mt: 3, mb: 4 }}
+              >
+                Buscar
+              </Button>
+            </Box>
+
+            {buscar ? (
+              <div style={{ width: 500 }}>
+                <DataGrid
+                  rows={usuarios}
+                  columns={columns}
+                  initialState={{
+                    pageSize: 5,
+                    pagination: {
+                      paginationModel: { pageSize: 25, page: 0 },
+                    },
+                  }}
+                />
+              </div>
+            ) : (
+              <></>
+            )}
+          </Box>
+        </Container>
       </ThemeProvider>
     </>
-  );  
+  );
 };
 
 export default Buscar;
- 
