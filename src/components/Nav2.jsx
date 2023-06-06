@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import {  GenContext } from  "../context/GenContext"  ;
 import {   useContext } from "react";
 import {  Dialog, DialogTitle,DialogContent,DialogContentText,DialogActions, Paper} from '@mui/material';
-import {  GenContext } from  "../context/GenContext"  ;
+ 
 
 const pages = [
 {
