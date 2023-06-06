@@ -7,7 +7,7 @@ import {   regiones } from "../../data/usuarios";
 import MenuItem from "@mui/material/MenuItem";
 
 
-const Regiones = ({
+const Region_c = ({
   name,
   label,
   control,
@@ -42,4 +42,4 @@ const Regiones = ({
     </FormControl>
   );
 };
-export default Regiones;  
+export default Region_c;  

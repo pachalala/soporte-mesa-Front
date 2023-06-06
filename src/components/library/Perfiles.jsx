@@ -2,37 +2,44 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select    from '@mui/material/Select';
+ 
+import { Controller } from "react-hook-form";
+
+import {   perfiles  } from "../../data/usuarios";
+
+export const Perfiles = ({
+  name,
+  label,
+  control,
+  defaultValue,
+  children,  
+  ...props
+}) => {
+  const labelId = `${name}-label`;
+  return (
+    <FormControl {...props}  fullWidth variant="filled"  sx={{ mt: 3 }}>
+      <InputLabel id={labelId}>{label}</InputLabel>
 
 
-import { usuarios as d_usuarios, perfiles  } from "../../data/usuarios";
-
-export const Perfiles = (props)=>{
-
-
-return (
-<FormControl fullWidth  variant="filled"   sx={{   mt: 3 }}>
-        <InputLabel id="lbl_perfil">Perfil</InputLabel>
-        <Select
-          labelId="lbl_region"
-          id="perfil"
-        // value={age}
-          label="Age"
-
-          {...props}
-            name="perfil"
-          //onChange={handleChange}
-        >
-
-      {perfiles.map((option) => (
-        <MenuItem key={option.id} value={option.id}>
-          {option.nombre}
-        </MenuItem>
-      ))}
-
-          
-        </Select>
-      </FormControl>
-
-)
-
-}
+      <Controller
+          render={({ field }) => (
+            <Select {...field}>
+            {perfiles.map((option) => (
+          <MenuItem key={option.id} value={option.id}>
+            {option.nombre}
+          </MenuItem>
+        ))}
+            </Select>
+          )}
+          control={control}
+          name={name}
+         
+          defaultValue={defaultValue}
+        />
+ 
+     
+     
+    </FormControl>
+  );
+};
+ 

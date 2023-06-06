@@ -22,13 +22,19 @@ import {
 import Texto from "../library/Texto";
 import Titulo from "../library/Titulo";
 
-import { Regiones } from "../library/Regiones";
+import   Regiones   from "../library/Regiones";
 
 import { Perfiles } from "../library/Perfiles";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useForm } from "react-hook-form";
 
-const defaultTheme = createTheme();
+
+
+import  Region_c   from "../library/Region_c";
+
+
+const defaultTheme = createTheme(); 
 
 const Editar = () => {
   const [Nombre, setnombre] = useState("");
@@ -51,50 +57,45 @@ const Editar = () => {
 
   const { id } = useParams();
 
-  const [Usuario, setUsuario] = useState({
-    id: 1,
-    login: "login1",
-    nombre: "Nombre 1",
-    rut: "1-9",
-    clave: "",
-    perfil: 0,
-    region: 0,
-    activo: 0,
-  });
+
+
+
+  useEffect(() => {
+     const traeDatos =   () => {
+      setValue ("id", "2");
+      setValue ("login", "login_3");
+      setValue ("nombre", "pepito last");
+      setValue ("rut", "1111111-5");
+      setValue ("clave", "piChi_123");
+
+     
+    };
+    traeDatos();
+    console.log("traigo datos..");
+  }, []);
+
+
+  const { register, formState: { errors },   handleSubmit , control , setValue   } = useForm({
+    defaultValues: {
+      id: 1,
+      login: "login1",
+      nombre: "Nombre 1",
+      rut: "1-9",
+      clave: "234",
+      perfil: "7",
+      region: "3" ,
+      activo: 0,
+    }
+});
+ 
+
+
+
+
 
 
   const navegate = useNavigate();
-
-  useEffect(() => {
-
-
-
-    const trae_registro = async (userId) => {
-      /*
-      const response = await fetch(`http://localhost:5021/ingredientes/${id}`);
-      const data = await response.json();
-      console.log(`data 1:${JSON.stringify(data)}`);
-   */
-      console.log(`id 1:${userId}`);
-  
-      // console.log(`usuarios:${JSON.stringify(d_usuarios)}`);
-  
-      //  console.log(`busqueda:2 ` + d_usuarios.find((user) => user.id === userId));
-  
-      // return d_usuarios.find((user) => user.id === userId);
-  
-      return ({
-        id: 1,
-        login: "113406322",
-        nombre: "Pepito los Palotes",
-        rut: "11340632-9",
-        clave: "Pepito_loveyou_123",
-        perfil: 7,
-        region: 1,
-        activo: 0,
-      });
-    };
-
+   
  /*
  setUsuario(trae_registro
    
@@ -108,28 +109,28 @@ const Editar = () => {
       region: 1,
       activo: 0,
     });
-    */
-    console.log(`data 1:${JSON.stringify(Usuario)}`);
-  }, []);
-
+    */ 
 
   function validacampos(event) {
-    const data = new FormData(event.currentTarget);
 
-    console.log("data:" + JSON.stringify(data));
-
-    const LoginValido = data.get("login").trim() !== "";
-    const NombreValido = data.get("nombre").trim() !== "";
-    var RutValido = data.get("rut").trim() !== "";
-    const PerfilValido = data.get("perfil").trim() !== "";
-    var ClaveValido = data.get("clave").trim() !== "";
-    const RegionValido = data.get("region").trim() !== "";
+    console.log("data_event:" + JSON.stringify(event));
+ 
+     
+    const LoginValido = event.login.trim() !== "";
+    const NombreValido = event.nombre.trim() !== "";
+    var RutValido = event.rut.trim() !== "";
+    const PerfilValido = event.perfil.trim() !== "";
+    var ClaveValido = event.clave.trim() !== "";
+    const RegionValido = event.region.trim() !== "";
 
     if (!ClaveValido)
        setMensajeClave ("Campo no puedes estar vacío")
     
+
+    console.log (`clave:   ${event.clave}`);
+
     if (ClaveValido)
-       if  (!validarClave(data.get("clave").trim())){
+       if  (!validarClave( event.clave.trim())){
             setMensajeClave ("Clave debe tener al menos: una mayúscula, una minúscula, un número, un caracter especial. y un mínimo de 8 caracteres")
             ClaveValido = false;
           }
@@ -139,7 +140,7 @@ const Editar = () => {
           setMensajeRUT ("Campo no puedes estar vacío")
        
        if (RutValido)
-          if  (!RutValidator(data.get("rut").trim())){
+          if  (!RutValidator( event.rut.trim())){
                setMensajeRUT ("RUT inválido")
                RutValido = false;
              }
@@ -170,8 +171,8 @@ const Editar = () => {
     setnombre(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = (event) => { 
+  //  event.preventDefault();
 
     if (validacampos(event)) {
       /*
@@ -284,7 +285,7 @@ const Editar = () => {
 
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{
               mt: 1,
@@ -321,7 +322,10 @@ const Editar = () => {
                 autoFocus
                 variant="filled"
                 placeholder="Ej: 11340632"
-                value={Usuario.login}
+
+                {...register('login' )} 
+
+          
                 error={!LoginValido}
                 helperText={!LoginValido && "El campo no puede estar vacío"}
                 sx={
@@ -332,17 +336,21 @@ const Editar = () => {
               />
 
               <Regiones
+                 id ="region"
+                 name = "region"
+                 control={control}
                 label="Región"
-                id="region"
-                name="region"
-                value={Usuario.region}
+                 {...register('region' )} 
                 error={!RegionValido}
                 helperText={!RegionValido && "El campo no puede estar vacío"}
               />
               <Perfiles
                   label="Perfil"
                   id="perfil"
-                  value={Usuario.perfil}
+                  name="perfil"
+                  control={control}
+                  {...register('perfil' )} 
+                
                 error={!PerfilValido}
 
                 helperText={!PerfilValido && "El campo no puede estar vacío"}
@@ -355,7 +363,8 @@ const Editar = () => {
                 id="nombre"
                 label="Nombre Usuario"
                 name="nombre"
-                value={Usuario.nombre}
+                {...register('nombre' )} 
+
                 placeholder="Ej: pepito los palotes"
                 onChange={handleChange}
                 error={!NombreValido}
@@ -368,9 +377,10 @@ const Editar = () => {
                 fullWidth
                 variant="filled"
                 id="clave"
-                label="Clave"
+                label="Clave"  
                 name="clave"
-                value={Usuario.clave}
+                {...register('clave' )} 
+
                 placeholder="Ej: Eh_1134905"
                 error={!ClaveValido}
                 helperText={!ClaveValido && MensajeClave}
@@ -385,7 +395,8 @@ const Editar = () => {
                 name="rut"
                 autoComplete="rut"
                 placeholder="Ej: 10340632-5"
-                value={Usuario.rut}
+                {...register('rut',  )} 
+
                 InputLabelProps={{ shrink: true }}
                 error={!RutValido}
                 helperText={!RutValido && MensajeRUT}

@@ -20,6 +20,7 @@
     "formik": "^2.4.1",
     "react": "latest",
     "react-dom": "latest",
+    "react-hook-form": "^7.44.3",
     "react-router-dom": "^6.11.1",
     "styled-components": "^5.3.10"
   },

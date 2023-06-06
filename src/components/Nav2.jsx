@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import {  GenContext } from  "../context/GenContext"  ;
 import {   useContext } from "react";
 import {  Dialog, DialogTitle,DialogContent,DialogContentText,DialogActions, Paper} from '@mui/material';
-
+import {  GenContext } from  "../context/GenContext"  ;
 
 const pages = [
 {
@@ -59,6 +59,10 @@ function Nav2() {
   const [openD, setOpenD] =  useState(false);
   const {  Usuario, setUsuario   } = useContext(GenContext);
   const [open, setOpen] = useState(true);
+
+  const {  Login    } = useContext(GenContext);
+
+
   const handleYes = () => {
     setUsuario({ nombre: "", perfil:""  });
   
@@ -253,7 +257,9 @@ function Nav2() {
  
 
           </Box>
-
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {Login.nombre}
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
