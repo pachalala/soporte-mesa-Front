@@ -245,7 +245,7 @@ function Nav2() {
         }}
       >
         <MenuItem onClick={handleCloseUserMenu}   >
-           <Link to='usuarios/crear'  key='crear'  style={linkStyle}  >   Crear    </Link>
+           <Link to='/usuarios/editar/-1'  key='crear'  style={linkStyle}  >   Crear    </Link>
          </MenuItem>
         <MenuItem onClick={handleCloseUserMenu}>
         <Link to='/usuarios/buscar'  key='crear'  style={linkStyle}  >   Buscar    

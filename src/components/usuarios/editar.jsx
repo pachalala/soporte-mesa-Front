@@ -17,33 +17,37 @@ import {
   Button,
   Typography,
   Alert,
-  ButtonGroup,  Dialog, DialogTitle,DialogContent,DialogContentText,DialogActions
+  ButtonGroup,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import Texto from "../library/Texto";
 import Titulo from "../library/Titulo";
 
-import   Regiones   from "../library/Regiones";
+import Regiones from "../library/Regiones";
 
 import { Perfiles } from "../library/Perfiles";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
+import Region_c from "../library/Region_c";
 
-
-import  Region_c   from "../library/Region_c";
-
-
-const defaultTheme = createTheme(); 
+const defaultTheme = createTheme();
 
 const Editar = () => {
   const [Nombre, setnombre] = useState("");
-  const [open, setOpen] =  useState(false);
+  const [open, setOpen] = useState(false);
+
+  const [Nuevo, setNuevo] = useState(false);
 
   const [MensajeClave, setMensajeClave] = useState("");
   const [MensajeRUT, setMensajeRUT] = useState("");
-
-  
 
   const [alertSaved, setalertSaved] = useState(false);
 
@@ -57,46 +61,50 @@ const Editar = () => {
 
   const { id } = useParams();
 
-
-
-
   useEffect(() => {
-     const traeDatos =   () => {
-      setValue ("id", "2");
-      setValue ("login", "login_3");
-      setValue ("nombre", "pepito last");
-      setValue ("rut", "1111111-5");
-      setValue ("clave", "piChi_123");
-
-     
+    const traeDatos = (id) => {
+      setValue("id", "2");
+      setValue("login", "login_3");
+      setValue("nombre", "pepito last");
+      setValue("rut", "1111111-5");
+      setValue("perfil", "7");
+      setValue("region", "3");
+      
+      
+      setValue("activo", true);
     };
-    traeDatos();
+
+    if (id != "-1") {
+      setNuevo(false);
+      traeDatos(id);
+    } else setNuevo(true);
+
     console.log("traigo datos..");
   }, []);
 
-
-  const { register, formState: { errors },   handleSubmit , control , setValue   } = useForm({
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    control,
+    setValue,
+    getValues,
+  } = useForm({
     defaultValues: {
-      id: 1,
-      login: "login1",
-      nombre: "Nombre 1",
-      rut: "1-9",
-      clave: "234",
-      perfil: "7",
-      region: "3" ,
-      activo: 0,
-    }
-});
- 
-
-
-
-
-
+      id: 0,
+      login: "",
+      nombre: "",
+      rut: "",
+      clave: "",
+      perfil: "",
+      region: "",
+      activo: false,
+    },
+  });
 
   const navegate = useNavigate();
-   
- /*
+
+  /*
  setUsuario(trae_registro
    
     setUsuario({
@@ -109,13 +117,11 @@ const Editar = () => {
       region: 1,
       activo: 0,
     });
-    */ 
+    */
 
   function validacampos(event) {
-
     console.log("data_event:" + JSON.stringify(event));
- 
-     
+
     const LoginValido = event.login.trim() !== "";
     const NombreValido = event.nombre.trim() !== "";
     var RutValido = event.rut.trim() !== "";
@@ -123,32 +129,25 @@ const Editar = () => {
     var ClaveValido = event.clave.trim() !== "";
     const RegionValido = event.region.trim() !== "";
 
-    if (!ClaveValido)
-       setMensajeClave ("Campo no puedes estar vacío")
-    
+    if (!ClaveValido) setMensajeClave("Campo no puedes estar vacío");
 
-    console.log (`clave:   ${event.clave}`);
+    console.log(`clave:   ${event.clave}`);
 
     if (ClaveValido)
-       if  (!validarClave( event.clave.trim())){
-            setMensajeClave ("Clave debe tener al menos: una mayúscula, una minúscula, un número, un caracter especial. y un mínimo de 8 caracteres")
-            ClaveValido = false;
-          }
+      if (!validarClave(event.clave.trim())) {
+        setMensajeClave(
+          "Clave debe tener al menos: una mayúscula, una minúscula, un número, un caracter especial. y un mínimo de 8 caracteres"
+        );
+        ClaveValido = false;
+      }
 
-  
-     if (!RutValido)
-          setMensajeRUT ("Campo no puedes estar vacío")
-       
-       if (RutValido)
-          if  (!RutValidator( event.rut.trim())){
-               setMensajeRUT ("RUT inválido")
-               RutValido = false;
-             }
-   
-          
+    if (!RutValido) setMensajeRUT("Campo no puedes estar vacío");
 
-        
-
+    if (RutValido)
+      if (!RutValidator(event.rut.trim())) {
+        setMensajeRUT("RUT inválido");
+        RutValido = false;
+      }
 
     setLoginValido(LoginValido);
     setNombreValido(NombreValido);
@@ -163,7 +162,7 @@ const Editar = () => {
       RutValido &&
       PerfilValido &&
       ClaveValido &&
-      RegionValido  
+      RegionValido
     );
   }
 
@@ -171,8 +170,8 @@ const Editar = () => {
     setnombre(event.target.value);
   };
 
-  const onSubmit = (event) => { 
-  //  event.preventDefault();
+  const onSubmit = (event) => {
+    //  event.preventDefault();
 
     if (validacampos(event)) {
       /*
@@ -198,13 +197,11 @@ const Editar = () => {
 
       setOpen(true);
 
-
       console.log(data.get("nombre"));
     } else {
       console.log("Los campos no son válidos");
     }
   };
-
 
   const validarClave = (clave) => {
     const regexMayuscula = /[A-Z]/;
@@ -227,52 +224,47 @@ const Editar = () => {
     );
   };
 
-
-
   function RutValidator(rut) {
-     
-      // Remover cualquier caracter que no sea un dígito o la letra 'k' en minúscula
-      const cleanRut = rut.replace(/[^0-9kK]/g, '').toLowerCase();
-  
-      // Verificar si el RUT tiene el formato correcto
-      if (/^[0-9]{7,8}[0-9k]$/.test(cleanRut)) {
-        const rutDigits = cleanRut.slice(0, -1);
-        const rutVerifier = cleanRut.slice(-1);
-        const verifier = calculateVerifier(rutDigits);
-  
-        // Verificar si el dígito verificador coincide
-        return(verifier === rutVerifier);
-      } else {
-        return (false);
-      }
+    // Remover cualquier caracter que no sea un dígito o la letra 'k' en minúscula
+    const cleanRut = rut.replace(/[^0-9kK]/g, "").toLowerCase();
+
+    // Verificar si el RUT tiene el formato correcto
+    if (/^[0-9]{7,8}[0-9k]$/.test(cleanRut)) {
+      const rutDigits = cleanRut.slice(0, -1);
+      const rutVerifier = cleanRut.slice(-1);
+      const verifier = calculateVerifier(rutDigits);
+
+      // Verificar si el dígito verificador coincide
+      return verifier === rutVerifier;
+    } else {
+      return false;
     }
-  
-    function  calculateVerifier  (rutDigits)  {
-      let sum = 0;
-      let multiplier = 2;
-  
-      // Calcular la suma ponderada de los dígitos del RUT
-      for (let i = rutDigits.length - 1; i >= 0; i--) {
-        sum += parseInt(rutDigits.charAt(i)) * multiplier;
-        multiplier = multiplier === 7 ? 2 : multiplier + 1;
-      }
-  
-      // Calcular el dígito verificador
-      const remainder = sum % 11;
-      const verifier = 11 - remainder;
-      return verifier === 11 ? '0' : verifier === 10 ? 'k' : verifier.toString();
+  }
+
+  function calculateVerifier(rutDigits) {
+    let sum = 0;
+    let multiplier = 2;
+
+    // Calcular la suma ponderada de los dígitos del RUT
+    for (let i = rutDigits.length - 1; i >= 0; i--) {
+      sum += parseInt(rutDigits.charAt(i)) * multiplier;
+      multiplier = multiplier === 7 ? 2 : multiplier + 1;
     }
 
-    const handleCancel = () => {
-      setOpen(false);
-      navegate(-1);
-    };
-  
-  
-    function handleClick() {
-      setOpen(true);
-       
-    }
+    // Calcular el dígito verificador
+    const remainder = sum % 11;
+    const verifier = 11 - remainder;
+    return verifier === 11 ? "0" : verifier === 10 ? "k" : verifier.toString();
+  }
+
+  const handleCancel = () => {
+    setOpen(false);
+    navegate(-1);
+  };
+
+  function handleClick() {
+    setOpen(true);
+  }
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
@@ -302,13 +294,13 @@ const Editar = () => {
               },
             }}
           >
-            <Titulo titulo="Editar Usuario" />
+            <Titulo titulo={Nuevo ? "Crear Usuario" : "Editar Usuario"} />
 
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
+                alignItems: "left",
               }}
             >
               <TextField
@@ -322,10 +314,7 @@ const Editar = () => {
                 autoFocus
                 variant="filled"
                 placeholder="Ej: 11340632"
-
-                {...register('login' )} 
-
-          
+                {...register("login")}
                 error={!LoginValido}
                 helperText={!LoginValido && "El campo no puede estar vacío"}
                 sx={
@@ -334,25 +323,22 @@ const Editar = () => {
                   }
                 }
               />
-
               <Regiones
-                 id ="region"
-                 name = "region"
-                 control={control}
+                id="region"
+                name="region"
+                control={control}
                 label="Región"
-                 {...register('region' )} 
+                {...register("region")}
                 error={!RegionValido}
                 helperText={!RegionValido && "El campo no puede estar vacío"}
               />
               <Perfiles
-                  label="Perfil"
-                  id="perfil"
-                  name="perfil"
-                  control={control}
-                  {...register('perfil' )} 
-                
+                label="Perfil"
+                id="perfil"
+                name="perfil"
+                control={control}
+                {...register("perfil")}
                 error={!PerfilValido}
-
                 helperText={!PerfilValido && "El campo no puede estar vacío"}
               />
               <TextField
@@ -363,29 +349,25 @@ const Editar = () => {
                 id="nombre"
                 label="Nombre Usuario"
                 name="nombre"
-                {...register('nombre' )} 
-
+                {...register("nombre")}
                 placeholder="Ej: pepito los palotes"
                 onChange={handleChange}
                 error={!NombreValido}
                 helperText={!NombreValido && "El campo no puede estar vacío"}
               />
-
               <TextField
                 InputLabelProps={{ shrink: true }}
                 margin="normal"
                 fullWidth
                 variant="filled"
                 id="clave"
-                label="Clave"  
+                label="Clave"
                 name="clave"
-                {...register('clave' )} 
-
+                {...register("clave")}
                 placeholder="Ej: Eh_1134905"
                 error={!ClaveValido}
                 helperText={!ClaveValido && MensajeClave}
               />
-
               <TextField
                 margin="normal"
                 variant="filled"
@@ -395,13 +377,30 @@ const Editar = () => {
                 name="rut"
                 autoComplete="rut"
                 placeholder="Ej: 10340632-5"
-                {...register('rut',  )} 
-
+                {...register("rut")}
                 InputLabelProps={{ shrink: true }}
                 error={!RutValido}
                 helperText={!RutValido && MensajeRUT}
               />
-
+               <Box
+                sx={{
+                  alignItems: "left",
+                }}
+              >
+                <FormControlLabel
+                  control={
+                    <input
+                      type="checkbox"
+                      name="activo"
+                      id="activo"
+                      {...register("activo")}
+                    />
+                  }
+                  label="Activo"
+                  sx={{ mb: 3 , mt: 2}}
+                  labelPlacement="start"
+                />
+              </Box>
               {alertSaved ? (
                 <Alert sx={{ mb: 3, width: "100%" }} severity="success">
                   Usuario guardado OK
@@ -409,7 +408,6 @@ const Editar = () => {
               ) : (
                 <></>
               )}
-
               <ButtonGroup>
                 <Button
                   type="submit"
@@ -423,7 +421,8 @@ const Editar = () => {
                 <Button
                   color="primary"
                   variant="outlined"
-                  sx={{ mx: 3, mb: 4 }}  onClick={handleCancel}
+                  sx={{ mx: 3, mb: 4 }}
+                  onClick={handleCancel}
                 >
                   Volver
                 </Button>
@@ -432,36 +431,30 @@ const Editar = () => {
           </Box>
         </Container>
 
-
         <Dialog
-        open={open}
-        onClose={handleCancel}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Editar Usuario"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Usuario guardado con éxito
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button  onClick={handleCancel}     color="secondary"
-                  variant="outlined"
-                  sx={{ mx: 3, mb: 4 }} >Cerrar</Button>
-      
-        </DialogActions>
-      </Dialog>
-
+          open={open}
+          onClose={handleCancel}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Editar Usuario"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Usuario guardado con éxito
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleCancel}
+              color="secondary"
+              variant="outlined"
+              sx={{ mx: 3, mb: 4 }}
+            >
+              Cerrar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </ThemeProvider>
-
-
-
-   
-
-
     </>
   );
 };

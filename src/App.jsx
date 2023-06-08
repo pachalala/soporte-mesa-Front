@@ -73,7 +73,7 @@ function App() {
               <Route path="/usuarios/buscar" element={<Buscar />}>
                 Ingredientes
               </Route>
-              <Route path="/usuarios/editar/:id" element={<Editar_Formik />}>
+              <Route path="/usuarios/editar/:id" element={<Editar/>}>
                 Editar
               </Route>
               <Route path="/inicio" element={<Inicio />}>
